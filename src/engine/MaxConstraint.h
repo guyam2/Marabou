@@ -21,7 +21,7 @@
 
 class MaxConstraint : public PiecewiseLinearConstraint
 {
-public:
+ public:
     ~MaxConstraint();
 
     /*
@@ -133,14 +133,7 @@ public:
     */
     String serializeToString() const;
 
-
-    /*
-     * Returns a boolean value indicating if at least one input variable was eliminated (True)
-     * or not (False)
-     */
-    bool wereVariablesEliminated() const;
-
-private:
+ private:
     unsigned _f;
     Set<unsigned> _elements;
     Set<unsigned> _initialElements;
@@ -149,8 +142,8 @@ private:
     bool _maxIndexSet;
     double _maxLowerBound;
     bool _obsolete;
-    bool _eliminatedVariables;
-    double _maxValueOfEliminated;
+    bool _eliminatedSomeVariables; // todo added
+    unsigned _maxValueOfEliminated; // todo added
 
     void resetMaxIndex();
 

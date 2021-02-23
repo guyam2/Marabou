@@ -45,7 +45,7 @@ void Options::initializeDefaultValues()
     _boolOptions[DNC_MODE] = false;
     _boolOptions[PREPROCESSOR_PL_CONSTRAINTS_ADD_AUX_EQUATIONS] = false;
     _boolOptions[RESTORE_TREE_STATES] = false;
-    _boolOptions[DUMP_BOUNDS] = false;
+    _boolOptions[ITERATIVE_PROPAGATION] = false;
     _boolOptions[SOLVE_WITH_MILP] = false;
 
     /*
@@ -76,8 +76,6 @@ void Options::initializeDefaultValues()
     _stringOptions[SUMMARY_FILE] = "";
     _stringOptions[SPLITTING_STRATEGY] = "";
     _stringOptions[SNC_SPLITTING_STRATEGY] = "";
-    _stringOptions[SYMBOLIC_BOUND_TIGHTENING_TYPE] = "";
-    _stringOptions[MILP_SOLVER_BOUND_TIGHTENING_TYPE] = "";
     _stringOptions[QUERY_DUMP_FILE] = "";
 }
 
@@ -158,43 +156,29 @@ SnCDivideStrategy Options::getSnCDivideStrategy() const
         return SnCDivideStrategy::Auto;
 }
 
-SymbolicBoundTighteningType Options::getSymbolicBoundTighteningType() const
-{
-    String strategyString =
-        String( _stringOptions.get( Options::SYMBOLIC_BOUND_TIGHTENING_TYPE ) );
-    if ( strategyString == "sbt" )
-        return SymbolicBoundTighteningType::SYMBOLIC_BOUND_TIGHTENING;
-    else if ( strategyString == "deeppoly" )
-        return SymbolicBoundTighteningType::DEEP_POLY;
-    else if ( strategyString == "none" )
-        return SymbolicBoundTighteningType::NONE;
-    else
-        return SymbolicBoundTighteningType::DEEP_POLY;
-}
-
 MILPSolverBoundTighteningType Options::getMILPSolverBoundTighteningType() const
 {
     if ( gurobiEnabled() )
     {
         String strategyString = String( _stringOptions.get( Options::MILP_SOLVER_BOUND_TIGHTENING_TYPE ) );
         if ( strategyString == "lp" )
-            return MILPSolverBoundTighteningType::LP_RELAXATION;
+            return LP_RELAXATION;
         else if ( strategyString == "lp-inc" )
-            return MILPSolverBoundTighteningType::LP_RELAXATION_INCREMENTAL;
+            return LP_RELAXATION_INCREMENTAL;
         else if ( strategyString == "milp" )
-            return MILPSolverBoundTighteningType::MILP_ENCODING;
+            return MILP_ENCODING;
         else if ( strategyString == "milp-inc" )
-            return MILPSolverBoundTighteningType::MILP_ENCODING_INCREMENTAL;
+            return MILP_ENCODING_INCREMENTAL;
         else if ( strategyString == "iter-prop" )
-            return MILPSolverBoundTighteningType::ITERATIVE_PROPAGATION;
+            return ITERATIVE_PROPAGATION;
         else if ( strategyString == "none" )
-            return MILPSolverBoundTighteningType::NONE;
+            return NONE;
         else
-            return MILPSolverBoundTighteningType::LP_RELAXATION;
+            return LP_RELAXATION;
     }
     else
     {
-        return MILPSolverBoundTighteningType::NONE;
+        return NONE;
     }
 }
 

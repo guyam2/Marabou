@@ -19,7 +19,7 @@
 /*
   MILP solver bound tighening options
 */
-enum class MILPSolverBoundTighteningType
+enum MILPSolverBoundTighteningType
 {
      // Only encode pure linear constraints in the underlying
      // solver, in a way that over-approximates the query
